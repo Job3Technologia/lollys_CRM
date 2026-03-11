@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Display | Lolly's Food Joint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body style="background: var(--secondary-white); padding: 40px;">
+    <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+        <div>
+            <h1 style="color: var(--accent-orange); font-size: 2.2rem; font-weight: 900;"><i class="fas fa-fire"></i> KITCHEN DISPLAY</h1>
+            <p style="color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Live Production Queue</p>
+        </div>
+        <div id="kitchen-time" style="font-size: 1.8rem; font-weight: 800; background: white; padding: 12px 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #F3F4F6;">12:00 PM</div>
+    </header>
+
+    <div id="load-alert" style="margin-bottom: 30px; display: none;">
+        <!-- Alerts will be shown here -->
+    </div>
+
+    <div id="kds-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+        <!-- Orders will be loaded here -->
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        async function loadKitchenQueue() {
+            try {
+                const response = await api.get('/kitchen/queue');
+                const queue = response.queue;
+                const loadStatus = response.loadStatus;
+
+                // Handle load alerts
+                const alertBox = document.getElementById('load-alert');
+                if (loadStatus.level !== 'Normal') {
+                    alertBox.style.display = 'block';
+                    alertBox.innerHTML = `
+                        <div class="card glass-panel" style="background: ${loadStatus.level === 'Critical' ? '#FEE2E2' : '#FEF3C7'}; border-left: 10px solid ${loadStatus.level === 'Critical' ? '#EF4444' : '#F59E0B'}; padding: 20px;">
+                            <h3 style="color: ${loadStatus.level === 'Critical' ? '#991B1B' : '#92400E'};">
+                                <i class="fas fa-exclamation-triangle"></i> KITCHEN ${loadStatus.level.toUpperCase()}
+                            </h3>
+                            <p style="font-weight: 600;">${loadStatus.message}</p>
+                        </div>
+                    `;
+                } else {
+                    alertBox.style.display = 'none';
+                }
+
+                const grid = document.getElementById('kds-grid');
+                grid.innerHTML = '';
+
+                queue.forEach(order => {
+                    const timeDiff = Math.floor((new Date() - new Date(order.created_at)) / 60000);
+                    const urgencyClass = timeDiff > 15 ? 'error' : (timeDiff > 10 ? 'warning' : 'info');
+                    
+                    grid.innerHTML += `
+                        <div class="card glass-panel" style="padding: 24px; border-top: 6px solid var(--${urgencyClass});">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                <h3 style="color: var(--accent-orange); font-weight: 800; font-size: 1.4rem;">#${order.order_number.slice(-4)}</h3>
+                                <span style="font-weight: 700; color: var(--text-muted);">${timeDiff}m ago</span>
+                            </div>
+                            <div style="font-size: 1.3rem; margin-bottom: 25px; font-weight: 600; line-height: 1.4;">
+                                ${order.items_summary.split(', ').map(i => `<div>• ${i}</div>`).join('')}
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                ${order.status === 'Received' ? 
+                                    `<button class="btn btn-primary" style="flex: 1;" onclick="updateStatus(${order.id}, 'Preparing')">Start Cooking</button>` :
+                                    `<button class="btn btn-primary" style="flex: 1; background: var(--success); border: none;" onclick="updateStatus(${order.id}, 'Ready')">Order Ready</button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch(e) { console.error('Kitchen fetch failed', e); }
+        }
+
+        async function updateStatus(id, status) {
+            await api.post('/kitchen/status', { order_id: id, status: status });
+            loadKitchenQueue();
+        }
+
+        setInterval(loadKitchenQueue, 10000);
+        loadKitchenQueue();
+
+        setInterval(() => {
+            document.getElementById('kitchen-time').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+:root {
+    /* Brand Colors - Luxury Light Theme */
+    --primary-white: #FFFFFF;
+    --secondary-white: #F9FAFB;
+    --accent-orange: #F97316;
+    --accent-yellow: #FDBA2D;
+    --surface-card: #FFFFFF;
+    --text-dark: #111827;
+    --text-muted: #6B7280;
+    --bg-cream: #FDFCF0;
+    
+    /* State Colors */
+    --success: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
+    --info: #3B82F6;
+
+    /* Glassmorphism Light */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --glass-blur: blur(12px);
+
+    /* Shadows & Elevation - More pronounced for light theme */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --hover-lift: translateY(-8px);
+
+    /* Spacing */
+    --container-width: 1200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--secondary-white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Section Header Styles */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--accent-orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.section-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Navbar - Luxury White Polish with Glassmorphism */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.75); /* White transparent */
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.navbar.scrolled {
+    padding: 10px 50px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    height: 45px;
+    width: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.logo h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--accent-orange), #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.uber-eats-badge {
+    font-size: 0.75rem;
+    background: #06C167; /* Uber Eats Green */
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(6, 193, 103, 0.2);
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-orange);
+}
+
+.nav-links a.active {
+    color: var(--accent-orange);
+    font-weight: 700;
+}
+
+/* Footer */
+footer {
+    background: var(--secondary-black);
+    padding: 80px 0 20px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h3 {
+    color: var(--accent-orange);
+    margin-bottom: 20px;
+}
+
+.socials {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.socials a {
+    width: 40px;
+    height: 40px;
+    background: var(--surface-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
+
+.socials a:hover {
+    background: var(--accent-orange);
+    transform: rotate(360deg);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Menu Page Enhancements */
+.menu-controls {
+    text-align: center;
+}
+
+.search-bar-container input:focus {
+    outline: none;
+    border-color: var(--accent-orange) !important;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
+}
+
+.sold-out {
+    opacity: 0.7;
+    filter: grayscale(0.8);
+    pointer-events: none;
+}
+
+.sold-out .card-actions {
+    pointer-events: none;
+}
+
+.sold-out-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.sold-out-overlay span {
+    background: var(--error);
+    color: white;
+    padding: 10px 30px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    transform: rotate(-15deg);
+    border: 4px solid white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.quantity-selector input::-webkit-outer-spin-button,
+.quantity-selector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-selector button:hover {
+    color: var(--accent-orange) !important;
+    background: rgba(0,0,0,0.05) !important;
+    border-radius: 4px;
+}
+
+.quick-add-btn {
+    transition: all 0.3s ease;
+}
+
+.food-card:hover .quick-add-btn {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.food-card:hover .img-container img {
+    transform: scale(1.1) !important;
+}
+
+.badge-popular {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Lolly's Food Joint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="fade-in">
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo">
+                <img src="../lollys logo.jpg" alt="Lolly's Logo">
+                <h1>Lolly's Food Joint</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                <li id="auth-btn"><a href="login.html" class="btn btn-login">Login</a></li>
+            </ul>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding: 150px 20px 100px;">
+        <div class="section-header">
+            <h2>Frequently Asked <span style="color: var(--accent-orange);">Questions</span></h2>
+            <p>Everything you need to know about ordering from Lolly's</p>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- FAQ Item 1 -->
+            <div class="card glass-panel" style="margin-bottom: 20px; padding: 25px; cursor: pointer;" onclick="toggleFaq(this)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem; margin: 0;">Do you offer delivery?</h3>
+                    <i class="fas fa-chevron-down" style="color: var(--accent-orange); transition: transform 0.3s;"></i>
+                </div>
+                <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                    <p style="margin-top: 15px; color: var(--text-muted);">Yes! We are available on Uber Eats for fast and reliable delivery straight to your door. You can also place orders for collection via our website.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="card glass-panel" style="margin-bottom: 20px; padding: 25px; cursor: pointer;" onclick="toggleFaq(this)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem; margin: 0;">Is the meat Halal?</h3>
+                    <i class="fas fa-chevron-down" style="color: var(--accent-orange); transition: transform 0.3s;"></i>
+                </div>
+                <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                    <p style="margin-top: 15px; color: var(--text-muted);">Absolutely. We are strictly 100% Halal certified. All our meats are sourced from certified suppliers and prepared in accordance with Halal standards.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="card glass-panel" style="margin-bottom: 20px; padding: 25px; cursor: pointer;" onclick="toggleFaq(this)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem; margin: 0;">How long does a collection order take?</h3>
+                    <i class="fas fa-chevron-down" style="color: var(--accent-orange); transition: transform 0.3s;"></i>
+                </div>
+                <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                    <p style="margin-top: 15px; color: var(--text-muted);">Typically, orders are ready within 15-20 minutes. However, during peak lunch hours (12pm - 2pm), it might take up to 30 minutes. You can select your preferred pickup time during checkout.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="card glass-panel" style="margin-bottom: 20px; padding: 25px; cursor: pointer;" onclick="toggleFaq(this)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem; margin: 0;">Do you do catering for events?</h3>
+                    <i class="fas fa-chevron-down" style="color: var(--accent-orange); transition: transform 0.3s;"></i>
+                </div>
+                <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                    <p style="margin-top: 15px; color: var(--text-muted);">Yes, we do! We offer platters and bulk orders for office parties, meetings, and private events. Please contact us at least 48 hours in advance to arrange catering.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="card glass-panel" style="margin-bottom: 20px; padding: 25px; cursor: pointer;" onclick="toggleFaq(this)">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem; margin: 0;">What payment methods do you accept?</h3>
+                    <i class="fas fa-chevron-down" style="color: var(--accent-orange); transition: transform 0.3s;"></i>
+                </div>
+                <div class="faq-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+                    <p style="margin-top: 15px; color: var(--text-muted);">For online orders, you can pay via Card or Cash on Collection. We also accept all major credit/debit cards and Zapper in-store.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2026 Lolly's Food Joint. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        function toggleFaq(element) {
+            const content = element.querySelector('.faq-content');
+            const icon = element.querySelector('.fa-chevron-down');
+            
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close other open FAQs
+                document.querySelectorAll('.faq-content').forEach(el => el.style.maxHeight = '0px');
+                document.querySelectorAll('.fa-chevron-down').forEach(el => el.style.transform = 'rotate(0deg)');
+                
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Lolly's Food Joint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo">
+                <img src="../lollys logo.jpg" alt="Lolly's Logo">
+                <h1>Lolly's Food Joint</h1>
+                <div class="uber-eats-badge">
+                    <i class="fas fa-motorcycle"></i> Available on Uber Eats
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li id="auth-btn"><a href="login.html" class="btn btn-login">Login</a></li>
+            </ul>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding: 120px 20px;">
+        <h1 style="margin-bottom: 30px;">Complete Your <span style="color: var(--accent-orange);">Order</span></h1>
+        
+        <form id="checkout-form" class="grid-2" style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px;">
+            <div class="glass-panel" style="padding: 30px;">
+                <h3>Customer Details</h3>
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="cust-name" required placeholder="Full Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="cust-phone" required placeholder="083 353 2775">
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Collection Info</h3>
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                    <div class="form-group">
+                        <label>Preferred Pickup Time</label>
+                        <input type="time" id="pickup-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <select id="payment-method">
+                            <option value="Cash">Cash on Collection</option>
+                            <option value="Card">Card on Collection</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Special Instructions (Optional)</label>
+                    <textarea id="order-notes" rows="3" placeholder="Any dietary requirements or notes..."></textarea>
+                </div>
+            </div>
+            
+            <div class="glass-panel" style="padding: 30px; height: fit-content;">
+                <h3>Order Summary</h3>
+                <div id="checkout-summary-items" style="margin-top: 20px;">
+                    <!-- Items will be loaded here -->
+                </div>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--glass-border);">
+                <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-bottom: 30px;">
+                    <span>Total</span>
+                    <span id="checkout-total">R0.00</span>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Place Order <i class="fas fa-check"></i></button>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 15px;">
+                    <i class="fas fa-lock"></i> Secure Checkout
+                </p>
+            </div>
+        </form>
+    </section>
+
+    <div id="order-success" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+            <h2>Order Placed!</h2>
+            <p>Your order <span id="order-num" style="color: var(--accent-orange); font-weight: 700;"></span> has been received.</p>
+            <p style="margin-bottom: 30px;">We'll start preparing it shortly.</p>
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const summary = document.getElementById('checkout-summary-items');
+            const totalEl = document.getElementById('checkout-total');
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                summary.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem;">
+                        <span>${item.quantity}x ${item.name}</span>
+                        <span>R${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            totalEl.textContent = `R${(subtotal + 5).toFixed(2)}`;
+        });
+
+        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const orderData = {
+                customer_name: document.getElementById('cust-name').value,
+                customer_phone: document.getElementById('cust-phone').value,
+                items: cart.map(item => ({ menu_item_id: item.id, quantity: item.quantity, price: item.price })),
+                subtotal: cart.reduce((acc, i) => acc + (i.price * i.quantity), 0),
+                service_fee: 5,
+                total_amount: cart.reduce((acc, i) => acc + (i.price * i.quantity), 0) + 5,
+                payment_method: document.getElementById('payment-method').value,
+                pickup_time: document.getElementById('pickup-time').value,
+                notes: document.getElementById('order-notes').value
+            };
+
+            try {
+                const response = await api.post('/orders', orderData);
+                if (response.order_number) {
+                    document.getElementById('order-num').textContent = response.order_number;
+                    document.getElementById('order-success').style.display = 'flex';
+                    localStorage.removeItem('lollys_cart');
+                    cart = [];
+                    updateCart();
+                }
+            } catch (error) {
+                alert('Error placing order. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

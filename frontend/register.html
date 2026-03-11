@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Lolly's Food Joint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="fade-in">
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="logo">
+                <img src="../lollys logo.jpg" alt="Lolly's Logo">
+                <h1>Lolly's Food Joint</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+            </ul>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding: 100px 0; display: flex; justify-content: center;">
+        <div class="card glass-panel" style="width: 100%; max-width: 550px; padding: 48px;">
+            <h2 style="margin-bottom: 10px; text-align: center;">Create Account</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px;">Join Lolly's for premium Durban flavors</p>
+            
+            <form id="register-form">
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" id="reg-first" required placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" id="reg-last" required placeholder="Doe">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="reg-phone" required placeholder="083 353 2775">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" required placeholder="••••••••">
+                </div>
+                
+                <!-- Human Verification Placeholder -->
+                <div id="turnstile-container" style="margin-bottom: 20px;">
+                    <div style="padding: 15px; background: #F3F4F6; border-radius: 12px; border: 1px dashed #D1D5DB; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                        <i class="fas fa-user-check"></i> Human Verification Widget Placeholder
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px;">
+                    <i class="fas fa-shield-alt"></i> We will send a verification code to your email.
+                </p>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account <i class="fas fa-arrow-right"></i></button>
+            </form>
+            
+            <div style="margin-top: 30px; text-align: center; font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--accent-orange); font-weight: 600;">Sign In</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const firstName = document.getElementById('reg-first').value;
+            const lastName = document.getElementById('reg-last').value;
+            const email = document.getElementById('reg-email').value;
+            const phone = document.getElementById('reg-phone').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, phone, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    sessionStorage.setItem('verify_email', email);
+                    window.location.href = 'verify.html';
+                } else {
+                    alert(data.error || 'Registration failed');
+                }
+            } catch (err) {
+                alert('Connection failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
